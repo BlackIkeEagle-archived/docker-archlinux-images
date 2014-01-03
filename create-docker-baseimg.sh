@@ -11,6 +11,20 @@ pacstrap -d "$1" bash bzip2 coreutils file filesystem findutils gawk gcc-libs ge
 # clear packages cache
 rm -f "$1/var/cache/pacman/pkg/"*
 
+# create working dev
+mknod -m 666 "$1/dev"/null c 1 3
+mknod -m 666 "$1/dev"/zero c 1 5
+mknod -m 666 "$1/dev"/random c 1 8
+mknod -m 666 "$1/dev"/urandom c 1 9
+mkdir -m 755 "$1/dev"/pts
+mkdir -m 1777 "$1/dev"/shm
+mknod -m 666 "$1/dev"/tty c 5 0
+mknod -m 600 "$1/dev"/console c 5 1
+mknod -m 666 "$1/dev"/tty0 c 4 0
+mknod -m 666 "$1/dev"/full c 1 7
+mknod -m 600 "$1/dev"/initctl p
+mknod -m 666 "$1/dev"/ptmx c 5 2
+
 # cleanup locale and manpage stuff, not needed to run in container
 toClean=('usr/share/locale' 'usr/share/i18n' 'usr/share/man')
 noExtract=''

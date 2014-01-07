@@ -1,0 +1,16 @@
+server {
+	listen 80;
+	listen [::]:80 default_server;
+
+	root /srv/http;
+	index index.php index.htm index.html;
+
+	location ~ .php$ {
+		root /srv/http;
+		#fastcgi_pass 127.0.0.1:9000;
+		fastcgi_pass unix:/run/php-fpm/php-fpm.sock;
+		fastcgi_index  index.php;
+		fastcgi_param  SCRIPT_FILENAME /srv/http$fastcgi_script_name;
+		include fastcgi_params;
+	}
+}

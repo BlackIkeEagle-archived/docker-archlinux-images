@@ -9,6 +9,7 @@ pacstrap -d "$buildfolder" bash bzip2 coreutils file filesystem findutils gawk g
 
 # clear packages cache
 rm -f "$buildfolder/var/cache/pacman/pkg/"*
+rm -f "$buildfolder/var/log/pacman.log"
 
 # create working dev
 mknod -m 666 "$buildfolder/dev"/null c 1 3
@@ -23,6 +24,9 @@ mknod -m 666 "$buildfolder/dev"/tty0 c 4 0
 mknod -m 666 "$buildfolder/dev"/full c 1 7
 mknod -m 600 "$buildfolder/dev"/initctl p
 mknod -m 666 "$buildfolder/dev"/ptmx c 5 2
+
+# link pacman log to /dev/null
+arch-chroot "$buildfolder" ln -s /dev/null /var/log/pacman.log
 
 # cleanup locale and manpage stuff, not needed to run in container
 toClean=('usr/share/locale' 'usr/share/i18n' 'usr/share/man')

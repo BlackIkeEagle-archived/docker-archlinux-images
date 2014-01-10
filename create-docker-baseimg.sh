@@ -1,4 +1,5 @@
 #!/bin/bash
+(( EUID != 0 )) && die 'This script must be run as root.'
 set -e
 
 buildfolder=$(basename $0)-$RANDOM

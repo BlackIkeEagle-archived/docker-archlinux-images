@@ -1,7 +1,7 @@
 FROM ike/archbase
 MAINTAINER Ike Devolder, ike.devolder@gmail.com
 
-RUN pacman -Syu --noconfirm nginx php-fpm && pacman -Scc --noconfirm
+RUN pacman -Syu --noconfirm nginx php-fpm && rm -f /var/cache/pacman/pkg/*
 RUN mkdir -p /etc/nginx/conf.d
 RUN mkdir -p /etc/nginx/sites-available
 RUN mkdir -p /etc/nginx/sites-enabled

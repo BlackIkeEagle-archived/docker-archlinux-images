@@ -29,8 +29,12 @@ mknod -m 666 "$buildfolder/dev"/ptmx c 5 2
 # link pacman log to /dev/null
 arch-chroot "$buildfolder" ln -s /dev/null /var/log/pacman.log
 
+# generate locales for en_US
+sed -e 's/#en_US/en_US/g' -i "$buildfolder/etc/locale.gen"
+arch-chroot "$buildfolder" locale-gen
+
 # cleanup locale and manpage stuff, not needed to run in container
-toClean=('usr/share/locale' 'usr/share/i18n' 'usr/share/man')
+toClean=('usr/share/locale' 'usr/share/man')
 noExtract=''
 for clean in ${toClean[@]}; do
 	rm -rf "$buildfolder/$clean"/*

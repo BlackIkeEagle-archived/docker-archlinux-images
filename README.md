@@ -13,3 +13,8 @@ images
 ------
 
 This repository will not contain actual images but scripts to create Archlinux based docker images
+
+* percona: mysql server
+* nginx-php: nginx webserver with php-fpm installed, serving nothing more than phpinfo()
+* nginx-hhvm: nginx webserver with hhvm fcgi, serving nothing more than phpinfo()
+

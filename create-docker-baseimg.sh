@@ -50,6 +50,9 @@ rm -rf store-locale
 sed -e 's/#en_US/en_US/g' -i "$buildfolder/etc/locale.gen"
 arch-chroot "$buildfolder" locale-gen
 
+# set default mirror
+echo 'Server = http://mirrors.kernel.org/archlinux/$repo/os/$arch' > "$buildfolder/etc/pacman.d/mirrorlist"
+
 tar --numeric-owner -C "$buildfolder" -c . | docker import - archlinux
 
 rm -rf "$buildfolder"

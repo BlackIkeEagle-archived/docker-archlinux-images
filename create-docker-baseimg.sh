@@ -29,9 +29,9 @@ mknod -m 666 "$buildfolder/dev"/ptmx c 5 2
 # link pacman log to /dev/null
 arch-chroot "$buildfolder" ln -s /dev/null /var/log/pacman.log
 
-# generate locales for en_US
-sed -e 's/#en_US/en_US/g' -i "$buildfolder/etc/locale.gen"
-arch-chroot "$buildfolder" locale-gen
+# backup required locale stuff
+mkdir store-locale
+cp -a "$buildfolder/usr/share/locale/"{locale.alias,en_US} store-locale
 
 # cleanup locale and manpage stuff, not needed to run in container
 toClean=('usr/share/locale' 'usr/share/man')
@@ -42,6 +42,14 @@ for clean in ${toClean[@]}; do
 done
 sed -e "s,^#NoExtract.*,NoExtract = $noExtract," -i "$buildfolder/etc/pacman.conf"
 
-tar --numeric-owner -C "buildfolder" -c . | docker import - archlinux
+# restore required locale stuff
+cp -a store-locale/* "$buildfolder/usr/share/locale/"
+rm -rf store-locale
+
+# generate locales for en_US
+sed -e 's/#en_US/en_US/g' -i "$buildfolder/etc/locale.gen"
+arch-chroot "$buildfolder" locale-gen
+
+tar --numeric-owner -C "$buildfolder" -c . | docker import - archlinux
 
 rm -rf "$buildfolder"

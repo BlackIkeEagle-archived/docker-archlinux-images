@@ -6,7 +6,7 @@ buildfolder=$(basename $0)-$RANDOM
 
 mkdir -p "$buildfolder"
 
-pacstrap -d "$buildfolder" bash bzip2 coreutils file filesystem findutils gawk gcc-libs gettext glibc grep gzip inetutils iputils iproute2 less pacman perl procps-ng psmisc sed shadow tar texinfo util-linux which
+pacstrap -C ./mkimage-arch-pacman.conf -c -G -M -d "$buildfolder" bash bzip2 coreutils file filesystem findutils gawk gcc-libs gettext glibc grep gzip inetutils iputils iproute2 less pacman perl procps-ng psmisc sed shadow tar texinfo util-linux which
 
 # clear packages cache
 rm -f "$buildfolder/var/cache/pacman/pkg/"*
@@ -38,6 +38,6 @@ for clean in ${toClean[@]}; do
 done
 sed -e "s,^#NoExtract.*,NoExtract = $noExtract," -i "$buildfolder/etc/pacman.conf"
 
-tar -C "$buildfolder" -c . | docker import - ike/archbase
+tar --numeric-owner -C "buildfolder" -c . | docker import - archlinux
 
 rm -rf "$buildfolder"

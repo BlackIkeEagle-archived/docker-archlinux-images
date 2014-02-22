@@ -6,7 +6,7 @@ buildfolder=$(basename $0)-$RANDOM
 
 mkdir -p "$buildfolder"
 
-pacstrap -C ./mkimage-arch-pacman.conf -c -G -M -d "$buildfolder" bash bzip2 coreutils file filesystem findutils gawk gcc-libs gettext glibc grep gzip inetutils iputils iproute2 less pacman perl procps-ng psmisc sed shadow tar texinfo util-linux which haveged
+pacstrap -C ./mkimage-arch-pacman.conf -c -G -M -d "$buildfolder" bash bzip2 coreutils file filesystem findutils gawk gcc-libs gettext glibc grep gzip inetutils iputils iproute2 less pacman perl procps-ng psmisc sed shadow tar texinfo util-linux which haveged supervisor
 
 # clear packages cache
 rm -f "$buildfolder/var/cache/pacman/pkg/"*
@@ -28,6 +28,9 @@ mknod -m 666 "$buildfolder/dev"/ptmx c 5 2
 
 # link pacman log to /dev/null
 arch-chroot "$buildfolder" ln -s /dev/null /var/log/pacman.log
+
+# update supervisord config
+sed -e "s,nodaemon=false,nodaemon=true ," -i "$buildfolder/etc/supervisord.conf"
 
 # backup required locale stuff
 mkdir store-locale

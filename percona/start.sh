@@ -12,4 +12,4 @@ if [[ ! -e "/var/lib/mysql/.installed" ]]; then
 	touch /var/lib/mysql/.installed
 fi
 
-su - mysql -s /bin/bash -c '/usr/bin/mysqld --pid-file=/run/mysqld/mysqld.pid --bind-address=0.0.0.0 --skip-name-resolve --datadir=/var/lib/mysql'
+/usr/bin/supervisord

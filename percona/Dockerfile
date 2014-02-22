@@ -1,8 +1,12 @@
 FROM archlinux
 MAINTAINER Ike Devolder, ike.devolder@gmail.com
 
-RUN pacman -Syu --noconfirm percona-server && rm -f /var/cache/pacman/pkg/*
+RUN pacman -Syu --noconfirm percona-server
+RUN pacman -Scc --noconfirm
+ADD ./percona.ini /etc/supervisor.d/percona.ini
 ADD ./start.sh /opt/start.sh
 RUN chmod +x /opt/start.sh
+
+EXPOSE 3306
 
 ENTRYPOINT ["/opt/start.sh"]

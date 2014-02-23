@@ -6,7 +6,7 @@ RUN pacman -Scc --noconfirm
 ADD ./enable_extensions.sh /tmp/enable_extensions.sh
 RUN /bin/sh /tmp/enable_extensions.sh && rm /tmp/enable_extensions.sh
 ADD ./apcu.ini /etc/php/conf.d/apcu.ini
-RUN cd /srv/http/ && curl -o owncloud.tar.bz2 http://download.owncloud.org/community/owncloud-6.0.0a.tar.bz2 && tar -jxf owncloud.tar.bz2
+RUN cd /srv/http/ && curl -o owncloud.tar.bz2 http://download.owncloud.org/community/owncloud-6.0.1.tar.bz2 && tar -jxf owncloud.tar.bz2
 RUN rm /srv/http/owncloud.tar.bz2
 RUN chown -R http:http /srv/http
 ADD ./owncloud /etc/nginx/sites-available/owncloud

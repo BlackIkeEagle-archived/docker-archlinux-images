@@ -1,22 +1,18 @@
 #!/bin/sh
 
-# option defaults
-mysql_ip=''
+if [[ -e /srv/http/owncloud/config/config.php ]]; then
+	if [[ "$DB_PORT_3306_TCP_ADDR" != "" ]]; then
+		sed "s/\('dbhost' => \).*/\1 '$DB_PORT_3306_TCP_ADDR',/" -i /srv/http/owncloud/config/config.php
+	fi
 
-# process options
-while getopts ":m:" arg; do
-	case "$arg" in
-		m) mysql_ip=$OPTARG ;;
-		:) "Option -$OPTARG requires an argument."
-	esac
-done
+	if [[ "$DB_USER" != "" ]]; then
+		sed "s/\('dbuser' => \).*/\1 '$DB_USER',/" -i /srv/http/owncloud/config/config.php
+	fi
 
-if [[ "$mysql_ip" != "" ]]; then
-	sed "s/\('dbhost' => \).*/\1 '$mysql_ip',/" -i /srv/http/owncloud/config/config.php
+	if [[ "$DB_PASS" != "" ]]; then
+		sed "s/\('dbpassword' => \).*/\1 '$DB_PASS',/" -i /srv/http/owncloud/config/config.php
+	fi
 fi
 
-chown http:http -R /srv/http/owncloud
+/usr/bin/supervisord
 
-/usr/bin/php-fpm --daemonize --pid /run/php-fpm/php-fpm.pid
-
-/usr/bin/nginx -g 'pid /run/nginx.pid; daemon off; master_process on;'

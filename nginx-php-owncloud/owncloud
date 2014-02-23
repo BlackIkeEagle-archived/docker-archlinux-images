@@ -1,9 +1,9 @@
 server {
-	listen 8000;
-	listen [::]:8000 default_server;
+	listen 80;
+	listen [::]:80 default_server;
 
-	access_log /var/log/nginx/owncloud.herecura.eu.access_log;
-	error_log /var/log/nginx/owncloud.herecura.eu.error_log;
+	access_log /var/log/nginx/owncloud.access_log;
+	error_log /var/log/nginx/owncloud.error_log;
 
 	root /srv/http/owncloud;
 	index index.php index.html;
@@ -49,7 +49,7 @@ server {
 
 		index index.php; # This one might be redundant, but it doesn't hurt to leave it here
 
-			try_files $uri $uri/ index.php;
+		try_files $uri $uri/ index.php;
 	}
 
 	# Configure PHP-FPM stuff

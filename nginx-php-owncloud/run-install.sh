@@ -43,4 +43,4 @@ docker run \
 	-link ${mysql_container_name}:db \
 	-v $owncloud_data_folder:/srv/http/owncloud/data \
 	-p 80:80 \
-	-d ike/nginx-php-owncloud
+	-i -t ike/nginx-php-owncloud /bin/bash

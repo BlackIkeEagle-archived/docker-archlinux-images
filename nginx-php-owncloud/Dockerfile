@@ -1,7 +1,8 @@
 FROM ike/nginx-php
 MAINTAINER Ike Devolder, ike.devolder@gmail.com
 
-RUN pacman -Syu --noconfirm php-gd php-mcrypt php-sqlite php-apcu && rm -f /var/cache/pacman/pkg/*
+RUN pacman -Syu --noconfirm php-gd php-mcrypt php-sqlite php-apcu
+RUN pacman -Scc --noconfirm
 ADD ./enable_extensions.sh /tmp/enable_extensions.sh
 RUN /bin/sh /tmp/enable_extensions.sh && rm /tmp/enable_extensions.sh
 ADD ./apcu.ini /etc/php/conf.d/apcu.ini
@@ -12,5 +13,3 @@ ADD ./owncloud /etc/nginx/sites-available/owncloud
 RUN rm /etc/nginx/sites-enabled/default && ln -s /etc/nginx/sites-available/owncloud /etc/nginx/sites-enabled/default
 ADD ./start.sh /opt/start.sh
 RUN chmod +x /opt/start.sh
-
-ENTRYPOINT ["/opt/start.sh"]

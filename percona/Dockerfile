@@ -9,4 +9,4 @@ RUN chmod +x /opt/start.sh
 
 EXPOSE 3306
 
-ENTRYPOINT ["/opt/start.sh"]
+CMD ["/opt/start.sh"]

@@ -1,4 +1,4 @@
 #!/bin/bash
-(( EUID != 0 )) && die 'This script must be run as root.'
+(( EUID != 0 )) && echo 'This script must be run as root.' && exit 1
 
 docker build -t ike/nginx-php-owncloud .

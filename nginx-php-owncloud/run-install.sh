@@ -1,5 +1,5 @@
 #!/bin/bash
-(( EUID != 0 )) && die 'This script must be run as root.'
+(( EUID != 0 )) && echo 'This script must be run as root.' && exit 1
 
 while getopts ":u:p:c:d:" opt; do
 	case $opt in

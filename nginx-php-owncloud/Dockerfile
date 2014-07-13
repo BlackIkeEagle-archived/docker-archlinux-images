@@ -1,4 +1,4 @@
-FROM ike/nginx-php
+FROM blackikeeagle/nginx-php
 MAINTAINER Ike Devolder, ike.devolder@gmail.com
 
 RUN pacman -Syu --noconfirm php-gd php-mcrypt php-sqlite php-apcu

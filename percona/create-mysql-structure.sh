@@ -12,4 +12,3 @@ if [[ ! -e "/var/lib/mysql/.installed" ]]; then
 	touch /var/lib/mysql/.installed
 fi
 
-/usr/bin/supervisord

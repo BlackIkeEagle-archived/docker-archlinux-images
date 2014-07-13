@@ -1,4 +1,4 @@
 #!/bin/bash
 (( EUID != 0 )) && echo 'This script must be run as root.' && exit 1
 
-docker build -t ike/nginx-hhvm .
+docker build -t blackikeeagle/nginx-hhvm .

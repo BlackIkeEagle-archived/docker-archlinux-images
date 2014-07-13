@@ -1,4 +1,4 @@
-FROM ike/nginx
+FROM blackikeeagle/nginx
 MAINTAINER Ike Devolder, ike.devolder@gmail.com
 
 RUN sed -e '/\[core\]/ i[herecura-stable]' -e '/\[core\]/ iServer = http://repo.herecura.eu/$repo/$arch' -e '/\[core\]/ i\ ' -i /etc/pacman.conf

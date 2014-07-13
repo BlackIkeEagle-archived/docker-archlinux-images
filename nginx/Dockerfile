@@ -10,9 +10,9 @@ ADD ./nginx.conf /etc/nginx/nginx.conf
 ADD ./default /etc/nginx/sites-available/default
 RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 ADD ./nginx.ini /etc/supervisor.d/nginx.ini
-ADD ./start.sh /opt/start.sh
-RUN chmod +x /opt/start.sh
 
 EXPOSE 80
 
-CMD ["/opt/start.sh"]
+VOLUME ["/etc/nginx", "/srv/http", "/var/log/supervisor"]
+
+CMD ["/usr/bin/supervisord"]

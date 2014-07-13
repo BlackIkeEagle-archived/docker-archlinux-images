@@ -13,6 +13,6 @@ ADD ./nginx.ini /etc/supervisor.d/nginx.ini
 
 EXPOSE 80
 
-VOLUME ["/etc/nginx", "/srv/http", "/var/log/supervisor"]
+VOLUME ["/var/log/supervisor"]
 
 CMD ["/usr/bin/supervisord"]

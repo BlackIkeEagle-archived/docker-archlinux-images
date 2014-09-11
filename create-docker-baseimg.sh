@@ -9,7 +9,8 @@ mkdir -p "$buildfolder"
 pacstrap -C ./mkimage-arch-pacman.conf -c -G -M -d "$buildfolder" \
 	bash bzip2 coreutils file filesystem findutils gawk gcc-libs gettext glibc \
 	grep gzip inetutils iputils iproute2 less pacman perl procps-ng psmisc sed \
-	shadow tar texinfo util-linux which haveged supervisor
+	shadow tar texinfo util-linux which supervisor
+# haveged 
 
 # clear packages cache
 rm -f "$buildfolder/var/cache/pacman/pkg/"*
@@ -62,12 +63,16 @@ echo 'Server = http://mirrors.kernel.org/archlinux/$repo/os/$arch' >\
 	"$buildfolder/etc/pacman.d/mirrorlist"
 
 # init keyring
+#arch-chroot "$buildfolder" \
+	#/bin/sh -c 'haveged -w 2048; \
+		#pacman-key --init; \
+		#pacman-key --populate archlinux; \
+		#pkill haveged; \
+		#pacman -Rcs --noconfirm haveged'
+
 arch-chroot "$buildfolder" \
-	/bin/sh -c 'haveged -w 2048; \
-		pacman-key --init; \
-		pacman-key --populate archlinux; \
-		pkill haveged; \
-		pacman -Rcs --noconfirm haveged'
+	/bin/sh -c 'pacman-key --init; \
+		pacman-key --populate archlinux'
 
 tar --numeric-owner -C "$buildfolder" -c . | docker import - archlinux
 

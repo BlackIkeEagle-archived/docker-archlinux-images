@@ -1,4 +1,4 @@
-FROM archlinux
+FROM blackikeeagle/archlinux
 MAINTAINER Ike Devolder, ike.devolder@gmail.com
 
 RUN pacman -Syu --noconfirm nginx

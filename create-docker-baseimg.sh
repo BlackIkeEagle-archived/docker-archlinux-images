@@ -74,6 +74,6 @@ arch-chroot "$buildfolder" \
 	/bin/sh -c 'pacman-key --init; \
 		pacman-key --populate archlinux'
 
-tar --numeric-owner -C "$buildfolder" -c . | docker import - archlinux
+tar --numeric-owner -C "$buildfolder" -c . | docker import - blackikeeagle/archlinux
 
 rm -rf "$buildfolder"
